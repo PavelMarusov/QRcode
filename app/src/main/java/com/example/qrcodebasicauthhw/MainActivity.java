@@ -1,5 +1,6 @@
 package com.example.qrcodebasicauthhw;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -45,13 +45,9 @@ public class MainActivity extends AppCompatActivity {
         userName = findViewById(R.id.userName);
         userPass = findViewById(R.id.userPass);
 
-        generateQr.setOnClickListener(view -> {
-            generateQr();
-        });
+        generateQr.setOnClickListener(view -> generateQr());
 
-        scanQrCode.setOnClickListener(view -> {
-            scanQrCode();
-        });
+        scanQrCode.setOnClickListener(view -> scanQrCode());
     }
 
     private void scanQrCode() {
@@ -66,8 +62,9 @@ public class MainActivity extends AppCompatActivity {
             String authHeader = scamResult.getContents();
             RetrofitBuilder.getService().getUser(authHeader).enqueue(new Callback<User>() {
                 @Override
-                public void onResponse(Call<User> call, Response<User> response) {
+                public void onResponse(@NonNull Call<User> call,@NonNull Response<User> response) {
                     if (response.isSuccessful()) {
+                        assert response.body() != null;
                         Toast.makeText(MainActivity.this, response.body().getLogin(), Toast.LENGTH_SHORT).show();
                     } else {
                         Log.d("tag", "response code: " + response.code());
@@ -75,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<User> call, Throwable t) {
+                public void onFailure(@NonNull Call<User> call,@NonNull Throwable t) {
                     Log.d("tag", "Error");
                 }
             });
