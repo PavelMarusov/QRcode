@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">QRCodeBasicAuthHw</string>
+    <string name="scanQrCode">scanQrCode</string>
+    <string name="generateqr">generateQr</string>
+    <string name="auth">auth</string>
+    <string name="android_3">Android-3</string>
+</resources>
